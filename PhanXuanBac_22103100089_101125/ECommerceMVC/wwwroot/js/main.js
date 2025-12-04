@@ -133,6 +133,9 @@
 
     // Product Quantity
     $('.quantity button').on('click', function () {
+        if ($(this).closest('.cart-table').length) {
+            return;
+        }
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
         if (button.hasClass('btn-plus')) {

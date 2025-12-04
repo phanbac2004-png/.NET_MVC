@@ -1,0 +1,70 @@
+﻿
+@model PhanXuanBac_22103100089.ViewModels.OrderSuccessVM
+@{
+	ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="container py-5">
+	<div class="text-center mb-5">
+		<h1 class="text-primary">Đặt hàng thành công!</h1>
+		<p class="mb-1">Mã đơn hàng: <strong>#@Model.OrderId</strong></p>
+		<p class="mb-0">Ngày đặt: @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+	</div>
+	<div class="row g-4">
+		<div class="col-lg-7">
+			<div class="bg-light rounded p-4 h-100">
+				<h4 class="mb-4">Thông tin khách hàng</h4>
+				<p class="mb-2"><strong>Họ tên:</strong> @Model.CustomerName</p>
+				<p class="mb-2"><strong>Địa chỉ:</strong> @Model.Address</p>
+				<p class="mb-2"><strong>Điện thoại:</strong> @Model.Phone</p>
+				@if (!string.IsNullOrWhiteSpace(Model.Note))
+				{
+					<p class="mb-0"><strong>Ghi chú:</strong> @Model.Note</p>
+				}
+			</div>
+		</div>
+		<div class="col-lg-5">
+			<div class="bg-light rounded p-4">
+				<h4 class="mb-4">Chi tiết đơn hàng</h4>
+				<table class="table table-borderless mb-0">
+					<thead>
+						<tr>
+							<th>Sản phẩm</th>
+							<th class="text-end">SL</th>
+							<th class="text-end">Giá</th>
+							<th class="text-end">Thành tiền</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model.Items)
+						{
+							<tr>
+								<td>@item.TenHH</td>
+								<td class="text-end">@item.SoLuong</td>
+								<td class="text-end">$ @item.DonGia.ToString("N0")</td>
+								<td class="text-end">$ @item.ThanhTien.ToString("N0")</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<hr />
+				<div class="d-flex justify-content-between">
+					<span>Tạm tính</span>
+					<strong>$ @Model.Subtotal.ToString("N0")</strong>
+				</div>
+				<div class="d-flex justify-content-between">
+					<span>Phí vận chuyển</span>
+					<strong>$ @Model.ShippingFee.ToString("N0")</strong>
+				</div>
+				<div class="d-flex justify-content-between fs-5 mt-2">
+					<span>Tổng cộng</span>
+					<strong class="text-primary">$ @Model.Total.ToString("N0")</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="text-center mt-5">
+		<a asp-controller="HangHoa" asp-action="Index" class="btn btn-primary rounded-pill px-4 py-2">Tiếp tục mua sắm</a>
+	</div>
+</div>
+
